@@ -12,22 +12,32 @@
 <!--Enter Heading Breakout Lesson 1
 
 make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
-
+<h1 style="margin: auto;font-family: monospace; text-align: center;">Breakout Lesson 1</h1>
+<canvas id="main_canavs" height="480" width="320"></canvas>
 <script>
 	// JavaScript code goes here
     //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
     
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
+  var canvas =document.getElementById("main_canavs"),//Give Id (Issue - 1 )
+  	  ctx = canvas.getContext("2d"),
+  	  width = 320,
+  	  height = 480,
+  	  ds={     // ds = default settings
+  	  	lineWidth: 2,
+  	  	ballRadius: 30
+  	  };
 
-    ctx.beginPath();
-//draw a rectangle at the top of canvas
-    ctx.closePath();
+	//draw a rectangle at the top of canvas
+	// assuming the height of the rectangle to be 20px;
+	ctx.lineWidth = ds.lineWidth;
+	ctx.strokeRect(2,2,width-2, 20);
+	ctx.stroke();
     
     ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
+	//draw a circle in the bottom middle of canvas 
+	ctx.arc(ds.ballRadius+4, height-ds.ballRadius-2, ds.ballRadius, 0, 2*Math.PI);
     ctx.closePath();
-    
+    ctx.stroke();
 </script>
 
 </body>
