@@ -118,7 +118,7 @@
         this.direction = d; // direction of the velocity
         this.dx = this.speed*Math.cos(this.direction); // x-component of the velocity
         this.dy = -this.speed*Math.sin(this.direction); // y-component ofthe velocity
-        this.isOut = true; // check if the ball is out of the bottom boundary
+        this.isOut = false; // check if the ball is out of the bottom boundary
 
         this.flipXVelcity = () => {
             this.dx = -this.dx;
@@ -174,15 +174,15 @@
 
         // to restart the game after 2 seconds
         this.reStart = () => {
-            setTimeout(() => {
+            
                 this.x = board.x+board.width/2;
-                this.y = board.y;
+                this.y = board.y-this.radius;
                 this.direction = Math.random()*(Math.PI*2/3 - Math.PI/6) + Math.PI/6;
                 this.dx = this.speed*Math.cos(this.direction);
                 this.dy = -this.speed*Math.sin(this.direction);
                 lives_--;
                 this.isOut = false;
-            },2000);
+            
         };
     }// -----------------------------------------
 
@@ -214,30 +214,42 @@
     // direction between 30deg to 120deg
 
 
+    var pauseCounter = 0;
     // ------ main game loop-------------
     // ----------------------------------
     function gameLoop(){
         score.innerHTML = score_;
         lives.innerHTML = lives_;
         
-        ctx.clearRect(0,0,canvas.width,canvas.height);
+        if(lives_ > 0){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
 
-        bricks.forEach((brick,index) => {
-            brick.draw();
-        });
+            bricks.forEach((brick,index) => {
+                brick.draw();
+            });
 
-        board.update();
-        board.draw();
+            board.update();
+            board.draw();
 
-        if(ball.isOut){
-            console.log('bye');
-            ball.reStart();
+            if(ball.isOut){
+                if(pauseCounter > 120){
+                    ball.reStart();
+                    pauseCounter = 0;
+                }
+                console.log('bye');
+                // ball.reStart();
+                pauseCounter++;
+            }
+            ball.update(board,bricks);
+            ball.draw();
+            if(checkAllBricksGone()){
+                isDone.innerHTML = "Now you are done congrats!!!!";
+            }
         }
-        ball.update(board,bricks);
-        ball.draw();
-        if(checkAllBricksGone()){
-            isDone.innerHTML = "Now you are done congrats!!!!";
+        else{
+            isDone.innerHTML = "GAME-OVER!!!!";
         }
+        
 
         requestAnimationFrame(gameLoop);
     }
