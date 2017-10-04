@@ -47,7 +47,7 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
 	ctx.stroke();
 
 /**
-* this will move the boll forward with the sped 200px
+* this will move the ball forward and in backward direction with the sped 200px
 */
 
     ctx.beginPath();
@@ -56,17 +56,15 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
     ctx.closePath();
     ctx.stroke();
     ctx.fillStyle = ds.background;
-    var int = setInterval(()=>{
-      if(av.rx - av.r > width ) av.rx = -ds.ballRadius;
-      ctx.fillRect(av.rx - av.r-2 < 0 ? 0 : av.rx - av.r-3, av.ry - av.r-2,av.rx + av.r+2, av.ry + av.r +2);
-      ctx.beginPath();
-      av.rx = av.rx + av.esf ; // move in x direction only
-      ctx.arc( av.rx , av.y, av.r, 0, 2*Math.PI); 
-      ctx.closePath();
-      ctx.stroke();
+    
+    var direction = 1; // 1 is positive x axis and -1 is negative x axis
 
+    var int = setInterval(()=>{
+      if(av.rx + av.r > width ) direction  = -1;
+      else if( av.rx - av.r -2 < 0 ) direction = 1;
+      ctx.fillRect(av.rx - av.r-2, av.ry - av.r-2,av.rx + av.r+2, av.ry + av.r +2);
       ctx.beginPath();
-      av.rx = av.rx + av.esf ; // move in x direction only
+      av.rx = av.rx + av.esf * direction ; // move in x direction only
       ctx.arc( av.rx , av.y, av.r, 0, 2*Math.PI); 
       ctx.closePath();
       ctx.stroke();
