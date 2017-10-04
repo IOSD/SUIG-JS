@@ -38,8 +38,6 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
         ry: height-ds.ballRadius-2,
         r: ds.ballRadius,
         esf: ((ds.animation_speed) * (ds.animation_delay)) / 1000, // esf = each_step_forward
-        a1: 0,
-        a2: 
       };
 
 	//draw a rectangle at the top of canvas
@@ -49,7 +47,7 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
 	ctx.stroke();
 
 /**
-* this will move the boll forward with the sped 200px per sec
+* this will move the boll forward with the sped 200px
 */
 
     ctx.beginPath();
@@ -60,7 +58,7 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
     ctx.fillStyle = ds.background;
     var int = setInterval(()=>{
       if(av.rx - av.r > width ) av.rx = -ds.ballRadius;
-      ctx.fillRect(av.rx - av.r-2 < 0 ? 0 : av.rx - av.r-2, av.ry - av.r-2,av.rx + av.r+2, av.ry + av.r +2);
+      ctx.fillRect(av.rx - av.r-2 < 0 ? 0 : av.rx - av.r-3, av.ry - av.r-2,av.rx + av.r+2, av.ry + av.r +2);
       ctx.beginPath();
       av.rx = av.rx + av.esf ; // move in x direction only
       ctx.arc( av.rx , av.y, av.r, 0, 2*Math.PI); 
