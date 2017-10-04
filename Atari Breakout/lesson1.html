@@ -23,12 +23,39 @@ make a canvas(id is myCanvas) 320*480 (Issue 1)   --> <canvas id="mycanvas" widt
     
   var canvas =document.getElementById("mycanvas");//Give Id (Issue - 1 )
   var ctx = canvas.getContext("2d");
-
-    ctx.beginPath();
 //draw a rectangle at the top of canvas
+    ctx.beginPath();
+    ctx.rect(10,20,50,25);
+    ctx.stroke();
     ctx.closePath();
     
     ctx.beginPath();
+    ctx.rect(70,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(130,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(190,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+
+    ctx.beginPath();
+    ctx.rect(250,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+
+
+
+
+
+    ctx.beginPath();
+    ctx.arc(160,450,10,0,2*Math.PI);
+    ctx.stroke();
 //draw a circle in the bottom middle of canvas 
     ctx.closePath();
     
