@@ -8,27 +8,23 @@
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
 </head>
-<body>
-<!--Enter Heading Breakout Lesson 1
+<body style="text-align:center">
+	<h1> Beakout leason one </h1>
+	<canvas width=480 height=320 id="myCanvas">Canvas is not supported, sorry.</canvas>
 
-make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+	<script>
+	var canvas =document.getElementById("myCanvas");
+	var ctx = canvas.getContext("2d");
 
-<script>
-	// JavaScript code goes here
-    //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
-    
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
+	ctx.beginPath();
+	ctx.rect(0, 0, 150, 100);
+	ctx.closePath();
+	ctx.stroke();
 
-    ctx.beginPath();
-//draw a rectangle at the top of canvas
-    ctx.closePath();
-    
-    ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
-    ctx.closePath();
-    
-</script>
-
+	ctx.beginPath();
+	ctx.arc(240, 160, 50, 0, 2*Math.PI);
+	ctx.stroke();
+	ctx.closePath();
+	</script>
 </body>
 </html>
