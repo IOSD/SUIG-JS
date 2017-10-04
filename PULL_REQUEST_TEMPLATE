@@ -3,7 +3,7 @@
 -->
 <!-- Add the issue number that is fixed by this PR (In the form Fixes #123) -->
 
-Fixes #<!--Enter Issue number you have referenced-->
+Fixes #<!--Enter Issue number you have referenced(please refer only one issue at once)-->
 
 #### Checklist
 <!-- Please Star this repository and follow this template for your PR to be considered-->
