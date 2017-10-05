@@ -9,25 +9,77 @@
     </style>
 </head>
 <body>
-<!--Enter Heading Breakout Lesson 1
+    <!-- Enter Heading Breakout Lesson 1
 
-make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+    make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+    <canvas id="myCanvas"></canvas>
 
 <script>
-	// JavaScript code goes here
-    //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
-    
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
+	
+    var canvas = document.getElementById("myCanvas");//Give Id (Issue - 1 )
+    var ctx = canvas.getContext('2d');
+    canvas.height = 320;
+    canvas.width = 480;
 
-    ctx.beginPath();
-//draw a rectangle at the top of canvas
-    ctx.closePath();
-    
-    ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
-    ctx.closePath();
-    
+    // ----BALL CONSTRUCTOR FUNCTION--------------
+    // -------------------------------------------
+    function Ball(x,y,r,d,speed){
+        this.x = x; // xcoordinate
+        this.y = y; // y coordinate
+        this.radius = r;
+        this.speed = speed; // magnitude of the velocity
+        this.direction = d; // direction of the velocity
+        this.dx = this.speed*Math.cos(this.direction); //  x-component of the velocity
+        this.dy = -this.speed*Math.sin(this.direction); // y-component ofthe velocity
+
+        // reverses the direction of x velocity
+        this.flipXVelcity = () => {
+            this.dx = -this.dx;
+        };
+
+        // reverses the direction of y velocity 
+        this.flipYVelocity = () => {
+            this.dy = -this.dy;
+        };
+        
+        // updates the position of the ball
+        this.update = (board,bricks) => {
+            this.x += this.dx;
+            this.y += this.dy;
+
+
+            if(this.x > canvas.width -this.radius || this.x-this.radius < 0){
+                this.flipXVelcity();
+            }
+            if(this.y > canvas.height -this.radius || this.y-this.radius < 0){
+                this.flipYVelocity();
+            }
+        };
+
+        // drawing the ball
+        this.draw = () => {
+            ctx.fillStyle = "#f25f5c";
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+            ctx.closePath();
+            ctx.fill();
+        };
+
+    }// -----------------------------------------
+
+    var ball = new Ball(100,100,5,Math.PI/6,10); // creating a new ball
+
+    // main game loop--------
+    function gameLoop(){
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+
+        ball.update();
+        ball.draw();
+
+        requestAnimationFrame(gameLoop);
+    }
+    gameLoop();
+
 </script>
 
 </body>
