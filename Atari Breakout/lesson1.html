@@ -9,25 +9,252 @@
     </style>
 </head>
 <body>
-<!--Enter Heading Breakout Lesson 1
+    <!-- Enter Heading Breakout Lesson 1
 
-make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+    make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+    <div>
+        Score: <span id="score">0</span> | Lives: <span id="lives">3</span> | <span id="isdone">Not done Yet</span>
+    </div>
+    <canvas id="myCanvas"></canvas>
 
 <script>
-	// JavaScript code goes here
-    //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
-    
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
+	
+    var canvas = document.getElementById("myCanvas");//Give Id (Issue - 1 )
+    var score = document.getElementById("score");
+    var lives = document.getElementById("lives");
+    var isDone = document.getElementById("isdone");
+    var lives_ = 3;
+    var score_ = 0;
+    canvas.height = window.innerHeight-50;
+    canvas.width = window.innerWidth-100;
+    canvas.style.backgroundColor = "#FBFCFF";
+    var ctx = canvas.getContext("2d");
+    // var out = false;
 
-    ctx.beginPath();
-//draw a rectangle at the top of canvas
-    ctx.closePath();
+    var col = 8; // columns of brick stack
+    var row = 3; // rows of brick stack
+    var noOfBricks = col*row;
+    var brickMargin = 10; // spacing between the bricks
+    var brickWidth = (canvas.width-brickMargin*2*col)/col;
+    var bricHeight = 20;
+
+    // ---------BRICK CONSTRUCTOR FUNCTION ------------
+    //-------------------------------------------------
+    function Brick(h,w,x,y){
+        this.height = h;
+        this.width = w;
+        this.x = x;
+        this.y = y;
+        this.isActive = true; 
+
+        this.draw = () => {
+            if(this.isActive){ // draw only if the ball is active
+                ctx.fillStyle = "#247BA0";
+                ctx.fillRect(this.x,this.y,this.width,this.height);
+                ctx.fillStyle = "#000000";
+            }
+        };
+    }// ------------------------------------------------
+
+    // ----------BOARD CONSTRUCTOR FUNCTION----------
+    //-----------------------------------------------
+    function Board(x,y){
+        this.x = x;
+        this.y = y;
+        this.dx = 8; // speed of the board
+        this.isMoving = false;
+        this.movingDirection = 0;;
+        this.height = 20;
+        this.width = 150;
+
+        this.update = () => {
+            if(!checkAllBricksGone()){
+                if(this.isMoving && this.movingDirection == 1 && this.x < canvas.width-this.width ){ // right movement
+                    this.x += this.dx;
+                }
+                else if(board.isMoving && this.movingDirection == -1 && this.x > 0){ // left movement
+                    this.x += -this.dx;
+                }
+            }
+            
+        }
+
+        this.draw = () => {
+            ctx.fillStyle = "#70c1b3";
+            ctx.fillRect(this.x,this.y,this.width,this.height);
+            ctx.fillStyle = "#000000";
+        };
+    }
+    // --------------------------------------------------
+
+    // -------INITIALIZING THE BRICKS------------
+    var bricks = [];
+    for(var i=0;i<row;i++){
+        for(var j=0;j<col;j++){
+            bricks.push(new Brick(bricHeight,brickWidth,(brickWidth+2*brickMargin)*j+brickMargin,(bricHeight+2*brickMargin)*i+brickMargin));
+        }
+    }
+    //--------------------------------------------
+
+    // function to check if all the brocks are gone
+    let checkAllBricksGone = () => {
+        for(let z=0;z<noOfBricks;z++){
+            if(bricks[z].isActive == true){
+                return false;
+            }
+        }
+        return true;
+    }// -----------------------------------------
     
-    ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
-    ctx.closePath();
+    var board = new Board(50,canvas.height-50);
+
+    // ----BALL CONSTRUCTOR FUNCTION--------------
+    // -------------------------------------------
+    function Ball(x,y,r,d){
+        this.x = x;
+        this.y = y;
+        this.radius = r;
+        this.speed = 10; // magnitude of the velocity
+        this.direction = d; // direction of the velocity
+        this.dx = this.speed*Math.cos(this.direction); //  x-component of the velocity
+        this.dy = -this.speed*Math.sin(this.direction); // y-component ofthe velocity
+        this.isOut = false; // check if the ball is out of the bottom boundary
+
+        this.flipXVelcity = () => {
+            this.dx = -this.dx;
+        };
+
+        this.flipYVelocity = () => {
+            this.dy = -this.dy;
+        };
+        
+        this.update = (board,bricks) => {
+            if(!this.isOut && !checkAllBricksGone()){
+                this.x += this.dx;
+                this.y += this.dy;
+
+                if(this.x > canvas.width - this.radius || this.x < 0){
+                    this.flipXVelcity();
+                }
+
+                if(this.y < 0){
+                    this.flipYVelocity();
+                }
+
+                if(this.x > board.x && this.x < board.x + board.width && this.y > board.y){
+                    this.flipYVelocity();
+                }
+
+                // checks collosion with each brick
+                bricks.forEach((brick,index) => {
+                    if(brick.isActive && this.x>brick.x && this.x<brick.x+brick.width && this.y>brick.y && this.y<brick.y+brick.height){
+                        this.flipYVelocity();
+                        brick.isActive = false;
+                        console.log("hit");
+                        score_++;
+                    }
+                });
+            }
+
+            if(this.y > canvas.height-this.radius){
+                this.isOut = true;
+                // console.log('stop');
+            }
+
+        };
+
+        this.draw = () => {
+            ctx.fillStyle = "#f25f5c";
+            ctx.beginPath();
+            ctx.arc(this.x,this.y,this.radius,0,2*Math.PI);
+            ctx.closePath();
+            ctx.fill();
+            ctx.fillStyle = "#000000";
+        };
+
+        // to restart the game after 2 seconds
+        this.reStart = () => {
+            
+                this.x = board.x+board.width/2;
+                this.y = board.y-this.radius;
+                this.direction = Math.random()*(Math.PI*2/3 - Math.PI/6) + Math.PI/6;
+                this.dx = this.speed*Math.cos(this.direction);
+                this.dy = -this.speed*Math.sin(this.direction);
+                lives_--;
+                this.isOut = false;
+            
+        };
+    }// -----------------------------------------
+
+
+    // ---------ADDING KEYBOARD EVENTS-----------
+    // ------------------------------------------
+    window.addEventListener('keydown', e => {
+        if(e.keyCode == 37){ // left
+            board.isMoving = true;
+            board.movingDirection = -1
+            // console.log('left');
+        }
+        else if(e.keyCode == 39){ // right
+            board.isMoving = true
+            board.movingDirection = 1;
+            // console.log('right');
+        }
+    });
+
+    window.addEventListener('keyup', e => {
+        board.isMoving = false;
+        board.movingDirection = 0;
+    });
+    // ------------------------------------------
     
+
+    // creating the ball object
+    let ball = new Ball(board.x+board.width/2,board.y-10,10,Math.random()*(Math.PI*2/3 - Math.PI/6) + Math.PI/6);
+    // direction between 30deg to 120deg
+
+
+    var pauseCounter = 0;
+    // ------ main game loop-------------
+    // ----------------------------------
+    function gameLoop(){
+        score.innerHTML = score_;
+        lives.innerHTML = lives_;
+        
+        if(lives_ > 0){
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+
+            bricks.forEach((brick,index) => {
+                brick.draw();
+            });
+
+            board.update();
+            board.draw();
+
+            if(ball.isOut){
+                if(pauseCounter > 120){
+                    ball.reStart();
+                    pauseCounter = 0;
+                }
+                // console.log('bye');
+                // ball.reStart();
+                pauseCounter++;
+            }
+            ball.update(board,bricks);
+            ball.draw();
+            if(checkAllBricksGone()){
+                isDone.innerHTML = "Now you are done congrats!!!!";
+            }
+        }
+        else{
+            isDone.innerHTML = "GAME-OVER!!!!";
+        }
+        
+
+        requestAnimationFrame(gameLoop);
+    }
+
+    gameLoop();  
 </script>
 
 </body>
