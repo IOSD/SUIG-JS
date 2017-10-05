@@ -1,26 +1,3 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
-
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    x += dx;
-    y += dy;
-}
-
-setInterval(draw, 10);
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,38 +8,34 @@ setInterval(draw, 10);
     	canvas { background: #eee; display: block; margin: 0 auto; }
     </style>
 </head>
-<body>
-<h1>Breakout Lesson 2</h1>
-    <canvas id="myCanvas" width="480" height="320"></canvas>
-<script>
-	var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
+<body style="text-align:center">
+	<h1> Atari Breakout </h1>
+	<canvas width=480 height=320 id="myCanvas">Canvas is not supported, sorry.</canvas>
 
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
+	<script>
+        var canvas = document.getElementById("myCanvas");
+        var ctx = canvas.getContext("2d");
+        var x = canvas.width / 2;
+        var y = canvas.height - 30;
+        var dx = 2;
+        var dy = -2;
 
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-   //Draw the ball and move it with speed 200 px per sec i.e every 10ms the canvas is cleared and new ball is made - Issue 4
-    
-    // Make the ball bounce back when wall is encountered - Issue 5
-    
-    //Change the color of a ball to another random color whenever it hits the wall - Issue 6 bonus
+        function drawBall() {
+            ctx.beginPath();
+            ctx.arc(x, y, 10, 0, Math.PI * 2);
+            ctx.fillStyle = "#fff";
+            ctx.fill();
+            ctx.closePath();
+        }
 
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawBall();
+            x += dx;
+            y += dy;
+        }
 
-}
-    
-
-</script>
-
+        setInterval(draw, 10);
+	</script>
 </body>
 </html>
