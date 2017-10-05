@@ -3,24 +3,23 @@
 -->
 <!-- Add the issue number that is fixed by this PR (In the form Fixes #123) -->
 
-Fixes #
+Fixes #<!--Enter Issue number you have referenced(please refer only one issue at once)-->
 
 #### Checklist
-
+<!-- Please Star this repository and follow this template for your PR to be considered-->
 - [ ] I have read the [Contribution Guide] and my PR follows them.
 - [ ] My branch is up-to-date with the master branch.
 - [ ] I have added tests that prove my fix is effective or that my feature works
 - [ ] I have added necessary documentation (if appropriate)
 <!-- If an existing function does not have a docstring, please add one -->
 - [ ] All the functions created/modified in this PR contain relevant docstrings.
+- [ ] I have uploaded the Screenshots after the issue has been resolved
 
 #### Short description of what this resolves:
 
 
 #### Changes proposed in this pull request:
-
+<!--Fill These Bullet Points-->
 -
 -
 -
-
-
