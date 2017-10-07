@@ -1,26 +1,4 @@
-var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
 
-function drawBall() {
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
-    ctx.fill();
-    ctx.closePath();
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawBall();
-    x += dx;
-    y += dy;
-}
-
-setInterval(draw, 10);
 <!DOCTYPE html>
 <html>
 <head>
@@ -36,31 +14,52 @@ setInterval(draw, 10);
     <canvas id="myCanvas" width="480" height="320"></canvas>
 <script>
 	var canvas = document.getElementById("myCanvas");
-var ctx = canvas.getContext("2d");
-var x = canvas.width/2;
-var y = canvas.height-30;
-var dx = 2;
-var dy = -2;
+    var ctx = canvas.getContext("2d");
+    var x = canvas.width/2;
+    var y = canvas.height-30;
+    var dx = 2;
+    var dy = 2;
+    var fact_x = 1, fact_y = 1;
 
 function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, 10, 0, Math.PI*2);
-    ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
 }
 
+function create_random_color(){
+    return 'rgb('+ parseInt( 255 * Math.random() ) + ', '+ parseInt( 255 * Math.random() ) + ', '+ parseInt( 255 * Math.random() ) + ')' ;
+}
+
 function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-   //Draw the ball and move it with speed 200 px per sec i.e every 10ms the canvas is cleared and new ball is made - Issue 4
-    
     // Make the ball bounce back when wall is encountered - Issue 5
-    
     //Change the color of a ball to another random color whenever it hits the wall - Issue 6 bonus
+    if( x + 10 >= canvas.width ) // 10 is the radius of the ball
+    {
+        fact_x = -1;
+        ctx.fillStyle = create_random_color();
+    }else if( x - 10 <= 0 ){
+        fact_x = 1;
+        ctx.fillStyle = create_random_color();
+    };
 
+    if( y + 10 >= canvas.height ){
+        fact_y = -1
+        ctx.fillStyle = create_random_color();
+    }else if( y - 10 <= 0 ){
+         fact_y = 1;
+        ctx.fillStyle = create_random_color();
+    };
 
+    x += dx * fact_x;
+    y += dy * fact_y;
+    //Draw the ball and move it with speed 200 px per sec i.e every 10ms the canvas is cleared and new ball is made - Issue 4
+    drawBall();
 }
-    
+
+setInterval(draw, 10);
 
 </script>
 
