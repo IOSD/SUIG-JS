@@ -5,27 +5,51 @@
     <title>Breakout Lesson 1</title>
     <style>
     	* { padding: 0; margin: 0; }
-    	canvas { background: #eee; display: block; margin: 0 auto; }
+    	canvas { 
+              background: #eee; display: block; margin: 0 auto; }
+               #mycanvas{
+                border:5px solid blue;
+            }
     </style>
 </head>
 <body>
 <!--Enter Heading Breakout Lesson 1
-
 make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+	<canvas id="mycanvas" width=320 height="480"></canvas>
 
 <script>
 	// JavaScript code goes here
     //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
     
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
-
-    ctx.beginPath();
-//draw a rectangle at the top of canvas
+  var canvas =document.getElementById("mycanvas");//Give Id (Issue - 1 )
+  var ctx = canvas.getContext("2d");
+//draw a rectangle at the top of canvas #dev
+//draw a circle in the bottom middle of canvas #Dev
+	ctx.beginPath();
+    ctx.rect(10,20,50,25);
+    ctx.stroke();
     ctx.closePath();
     
     ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
+    ctx.rect(70,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(130,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(190,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.rect(250,20,50,25);
+    ctx.stroke();
+    ctx.closePath();
+    ctx.beginPath();
+    ctx.arc(160,450,10,0,2*Math.PI);
+    ctx.stroke();
+ 
     ctx.closePath();
     
 </script>
