@@ -11,23 +11,26 @@
 <body>
 <!--Enter Heading Breakout Lesson 1
 
-make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
-
+make a canvas(id is myCanvas) 320*480 (Issue 1)   -->
+<h1><center>Atari Breakout<center></h1>
+<canvas id="myCanvas"/>
 <script>
 	// JavaScript code goes here
-    //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
-    
-  var canvas =document.getElementById("");//Give Id (Issue - 1 )
-var ctx = canvas.getContext("2d");
+    // We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
+
+    var canvas = document.getElementById("myCanvas"); //Give Id (Issue - 1 )
+    canvas.width = 480;
+    canvas.height = 320;
+    var ctx = canvas.getContext("2d");
 
     ctx.beginPath();
-//draw a rectangle at the top of canvas
+    //draw a rectangle at the top of canvas
     ctx.closePath();
-    
+
     ctx.beginPath();
-//draw a circle in the bottom middle of canvas 
+    //draw a circle in the bottom middle of canvas
     ctx.closePath();
-    
+
 </script>
 
 </body>
