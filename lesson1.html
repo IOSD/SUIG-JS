@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Breakout Lesson 1</title>
+    <style>
+    	* { padding: 0; margin: 0; }
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+    </style>
+</head>
+<body>
+<!--Enter Heading Breakout Lesson 1
+
+make a canvas(id is myCanvas) 320*480 (Issue 1)   --> 
+<h1 style="margin: auto;font-family: monospace; text-align: center;">Breakout Lesson 1</h1>
+<canvas id="main_canavs" height="480" width="320"></canvas>
+<script>
+	// JavaScript code goes here
+    //We require circle(ball) and rectangles for this game so lesson 1 is how to generate a canvas and draw a circle and rectangle on it.
+  
+  var loop = true;
+
+  var canvas =document.getElementById("main_canavs"),//Give Id (Issue - 1 )
+  	  ctx = canvas.getContext("2d"),
+  	  width = 320,
+  	  height = 480,
+  	  ds={     // ds = default settings
+  	  	lineWidth: 2,
+        background: '#eee',
+  	  	ballRadius: 30,
+        animation_delay : 10,
+        animation_speed : 200
+  	  },
+      av = { //av = animation_variables
+        x: -ds.ballRadius, 
+        y: height-ds.ballRadius-2,
+        rx: ds.ballRadius+4,
+        ry: height-ds.ballRadius-2,
+        r: ds.ballRadius,
+        esf: ((ds.animation_speed) * (ds.animation_delay)) / 1000, // esf = each_step_forward
+        color: 'rgb(255, 255, 255)' // pure white color, made using rgb rule
+      };
+
+      function createRandomColor(){
+        av.color = 'rgb('+ parseInt(255*Math.random()) +', '+ parseInt(255*Math.random()) +', '+ parseInt(255*Math.random()) +')';
+      };
+
+	//draw a rectangle at the top of canvas
+	// assuming the height of the rectangle to be 20px;
+	ctx.lineWidth = ds.lineWidth;
+	ctx.strokeRect(2,2,width-2, 20);
+	ctx.stroke();
+
+/**
+* this will move the ball forward and in backward direction with the speed 200px and changes its color on collision
+*/
+
+    ctx.beginPath();
+  	//draw a circle in the bottom middle of canvas 
+  	ctx.arc(ds.ballRadius+4, height-ds.ballRadius-2, ds.ballRadius, 0, 2*Math.PI);
+    ctx.closePath();
+    ctx.stroke();
+
+    var direction = 1; // 1 is positive x axis and -1 is negative x axis
+
+    var int = setInterval(()=>{
+      if(av.rx + av.r > width ){ direction  = -1; createRandomColor();}
+      else if( av.rx - av.r -2 < 0 ){ direction = 1; createRandomColor();};
+      ctx.fillStyle = ds.background;
+      ctx.fillRect(av.rx - av.r-2, av.ry - av.r-2,av.rx + av.r+2, av.ry + av.r +2);
+      ctx.fillStyle = av.color;
+      ctx.beginPath();
+      av.rx = av.rx + av.esf * direction ; // move in x direction only
+      ctx.arc( av.rx , av.y, av.r, 0, 2*Math.PI); 
+      ctx.closePath();
+      ctx.stroke();
+      ctx.fill();
+    }, ds.animation_delay);    
+
+</script>
+
+</body>
+</html>
