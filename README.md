@@ -1,2 +1,2 @@
 # SUIG-JS
-Simple User Interface Games JavaScript
+Simple User Interface Games JavaScript.
